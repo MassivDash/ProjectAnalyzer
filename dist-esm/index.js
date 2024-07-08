@@ -7,7 +7,16 @@ const fs_1 = __importDefault(require("fs"));
 const lib_1 = require("./lib");
 const getStructureRatio = (stats) => {
     const { codelines, chars, folders, files, deepestLevel } = stats;
-    return (folders * deepestLevel) / ((files * codelines) / chars);
+    const fileToDirectoryRatio = files / folders;
+    const normalizedLines = codelines / 20;
+    const normializedChars = chars / 230;
+    const baseComplexity = fileToDirectoryRatio * 0.4 +
+        normalizedLines * 0.3 +
+        normializedChars * 0.3 +
+        deepestLevel * 0.1;
+    const scaleFactor = 1 + Math.log2(files + folders + 1);
+    const complexity = baseComplexity * scaleFactor;
+    return Math.floor(complexity);
 };
 const patterns = (0, lib_1.getPatterns)();
 const data = (0, lib_1.getDirectoryStructure)(process.cwd(), patterns);

@@ -6,6 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPatterns = exports.checkForIgnore = void 0;
 const picomatch_1 = __importDefault(require("picomatch"));
 const fs_1 = __importDefault(require("fs"));
+const standardIgnorePatterns = [
+    "node_modules",
+    "dist",
+    ".git",
+    ".vscode",
+    ".idea",
+    ".DS_Store",
+];
 const checkForIgnore = (patterns, name) => patterns.some((pattern) => {
     if (pattern.startsWith("!")) {
         return !picomatch_1.default.matchBase(name, pattern);
@@ -15,21 +23,20 @@ const checkForIgnore = (patterns, name) => patterns.some((pattern) => {
     }
 });
 exports.checkForIgnore = checkForIgnore;
-// Read the .gitingore file and get the patterns
 const getPatterns = (gitignore = "./.gitignore") => {
     let patterns = [];
     try {
         const gitignoreContent = fs_1.default.readFileSync(gitignore, "utf8");
         patterns = gitignoreContent.split("\n").filter((e) => !!e);
-        return patterns;
+        return patterns.concat(standardIgnorePatterns);
     }
     catch (err) {
         if (err.code !== "ENOENT") {
             console.error(`Error reading .gitignore file: ${err}`);
-            return patterns;
+            return patterns.concat(standardIgnorePatterns);
         }
     }
-    return patterns;
+    return patterns.concat(standardIgnorePatterns);
 };
 exports.getPatterns = getPatterns;
 //# sourceMappingURL=ignore.js.map

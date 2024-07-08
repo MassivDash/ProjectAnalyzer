@@ -1,6 +1,15 @@
 import picomatch from "picomatch";
 import fs from "fs";
 
+const standardIgnorePatterns = [
+  "node_modules",
+  "dist",
+  ".git",
+  ".vscode",
+  ".idea",
+  ".DS_Store",
+];
+
 export const checkForIgnore = (patterns: string[], name: string) =>
   patterns.some((pattern) => {
     if (pattern.startsWith("!")) {
@@ -10,18 +19,17 @@ export const checkForIgnore = (patterns: string[], name: string) =>
     }
   });
 
-// Read the .gitingore file and get the patterns
 export const getPatterns = (gitignore: string = "./.gitignore"): string[] => {
   let patterns: string[] = [];
   try {
     const gitignoreContent = fs.readFileSync(gitignore, "utf8");
     patterns = gitignoreContent.split("\n").filter((e) => !!e);
-    return patterns;
+    return patterns.concat(standardIgnorePatterns);
   } catch (err) {
     if (err.code !== "ENOENT") {
       console.error(`Error reading .gitignore file: ${err}`);
-      return patterns;
+      return patterns.concat(standardIgnorePatterns);
     }
   }
-  return patterns;
+  return patterns.concat(standardIgnorePatterns);
 };

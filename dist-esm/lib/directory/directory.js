@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDirectoryStructure = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const sloc_1 = __importDefault(require("sloc"));
 const __1 = require("../");
 function getDirectoryStructure(dirPath, patterns = []) {
     const name = path_1.default.basename(dirPath) || dirPath;
@@ -23,17 +24,76 @@ function getDirectoryStructure(dirPath, patterns = []) {
         return null;
     }
     if (itemStat.isFile()) {
-        const fileContent = fs_1.default.readFileSync(dirPath, "utf-8");
-        const lines = fileContent.split("\n").length;
-        const chars = fileContent.length;
-        const stats = {
-            codelines: lines,
-            chars,
-            folders: 0,
-            files: 1,
-            deepestLevel: 0,
-        };
-        return { item, stats };
+        const fullName = path_1.default.extname(dirPath).toLowerCase();
+        const extension = fullName.split(".").pop() || "";
+        const commonExtensions = [
+            "md",
+            "mdx",
+            "js",
+            "ts",
+            "tsx",
+            "jsx",
+            "astro",
+            "mjs",
+            "cjs",
+            "json",
+            "yml",
+            "yaml",
+            "toml",
+            "html",
+            "css",
+            "scss",
+            "sass",
+            "less",
+            "styl",
+            "graphql",
+            "gql",
+            "vue",
+            "svelte",
+            "php",
+            "py",
+            "rb",
+            "java",
+            "kt",
+            "swift",
+            "go",
+            "rs",
+            "r",
+            "cs",
+        ];
+        if (!commonExtensions.includes(extension)) {
+            console.log(`Reading file: ${dirPath}`);
+            const fileContent = fs_1.default.readFileSync(dirPath, "utf-8");
+            let lines = 0;
+            try {
+                const slocStats = (0, sloc_1.default)(fileContent, extension);
+                lines = slocStats.source;
+                console.log(slocStats);
+            }
+            catch (err) {
+                console.error(`Error reading file: ${err}`);
+                lines = fileContent.split("\n").length;
+            }
+            const chars = fileContent.length;
+            const stats = {
+                codelines: lines,
+                chars,
+                folders: 0,
+                files: 1,
+                deepestLevel: 0,
+            };
+            return { item, stats };
+        }
+        else {
+            const stats = {
+                codelines: 0,
+                chars: 0,
+                folders: 0,
+                files: 1,
+                deepestLevel: 0,
+            };
+            return { item, stats };
+        }
     }
     if (itemStat.isDirectory()) {
         const children = fs_1.default

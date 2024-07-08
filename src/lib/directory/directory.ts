@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import mime from "mime-types";
+import sloc from "sloc";
 import { checkForIgnore, sortDirectoryStructure } from "../";
 import type { Folder, Stats } from "../../types/folders";
 
@@ -26,11 +26,60 @@ export function getDirectoryStructure(
   }
 
   if (itemStat.isFile()) {
-    const fileExtension = path.extname(dirPath).toLowerCase();
-    const mimeType = mime.lookup(fileExtension);
-    if (mimeType && mimeType.startsWith("text/")) {
+    const fullName = path.extname(dirPath).toLowerCase();
+    const extension = fullName.split(".").pop() || "";
+    const commonExtensions = [
+      "md",
+      "mdx",
+      "js",
+      "ts",
+      "tsx",
+      "jsx",
+      "astro",
+      "mjs",
+      "cjs",
+      "json",
+      "yml",
+      "yaml",
+      "toml",
+      "html",
+      "css",
+      "scss",
+      "sass",
+      "less",
+      "styl",
+      "graphql",
+      "gql",
+      "vue",
+      "svelte",
+      "php",
+      "py",
+      "rb",
+      "java",
+      "kt",
+      "swift",
+      "go",
+      "rs",
+      "r",
+      "cs",
+      "wasm",
+      "webmanifest",
+    ];
+
+    if (!commonExtensions.includes(extension)) {
+      console.log(`Reading file: ${dirPath}`);
       const fileContent = fs.readFileSync(dirPath, "utf-8");
-      const lines = fileContent.split("\n").length;
+
+      let lines = 0;
+
+      try {
+        const slocStats = sloc(fileContent, extension as string);
+        lines = slocStats.source;
+        console.log(slocStats);
+      } catch (err) {
+        console.error(`Error reading file: ${err}`);
+        lines = fileContent.split("\n").length;
+      }
       const chars = fileContent.length;
       const stats: Stats = {
         codelines: lines,
