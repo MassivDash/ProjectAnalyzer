@@ -13,6 +13,10 @@ const standardIgnorePatterns = [
     ".vscode",
     ".idea",
     ".DS_Store",
+    "package-lock.json",
+    "yarn.lock",
+    "stats.json",
+    ".yarn",
 ];
 const checkForIgnore = (patterns, name) => patterns.some((pattern) => {
     if (pattern.startsWith("!")) {

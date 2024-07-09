@@ -8,6 +8,10 @@ const standardIgnorePatterns = [
   ".vscode",
   ".idea",
   ".DS_Store",
+  "package-lock.json",
+  "yarn.lock",
+  "stats.json",
+  ".yarn",
 ];
 
 export const checkForIgnore = (patterns: string[], name: string) =>

@@ -2,4 +2,4 @@ node_modules
 output.json
 stats.json
 dist-esm
-*.tgz
+.tgz

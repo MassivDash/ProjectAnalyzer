@@ -1,8 +1,26 @@
 import fs from "fs";
 import path from "path";
 import sloc from "sloc";
-import { checkForIgnore, sortDirectoryStructure } from "../";
+import {
+  checkForIgnore,
+  sortDirectoryStructure,
+  createTable,
+  logWithColor,
+  createSpacer,
+} from "../";
 import type { Folder, Stats } from "../../types/folders";
+
+interface SlocStats {
+  total: number;
+  source: number;
+  comment: number;
+  single: number;
+  block: number;
+  mixed: number;
+  empty: number;
+  todo: number;
+  blockEmpty: number;
+}
 
 export function getDirectoryStructure(
   dirPath: string,
@@ -17,7 +35,7 @@ export function getDirectoryStructure(
   try {
     itemStat = fs.statSync(dirPath);
   } catch (err) {
-    console.error(`Error reading path: ${err}`);
+    console.error(`File system read error:  ${err}`);
     return null;
   }
 
@@ -66,19 +84,45 @@ export function getDirectoryStructure(
       "webmanifest",
     ];
 
-    if (!commonExtensions.includes(extension)) {
-      console.log(`Reading file: ${dirPath}`);
+    if (commonExtensions.includes(extension)) {
       const fileContent = fs.readFileSync(dirPath, "utf-8");
 
       let lines = 0;
 
       try {
-        const slocStats = sloc(fileContent, extension as string);
+        const slocStats: SlocStats = sloc(fileContent, extension as string);
         lines = slocStats.source;
-        console.log(slocStats);
+
+        const headers = [
+          "total",
+          "source",
+          "comment",
+          "single",
+          "block",
+          "mixed",
+          "empty",
+          "todo",
+          "blockEmpty",
+        ];
+
+        createSpacer(2);
+        logWithColor(
+          "yellow",
+          createTable(
+            headers,
+            Object.entries(slocStats).map(([key, value]) => [
+              key,
+              value.toString(),
+            ])
+          )
+        );
       } catch (err) {
-        console.error(`Error reading file: ${err}`);
-        lines = fileContent.split("\n").length;
+        lines = fileContent.split(/\r?\n/).length;
+
+        logWithColor(
+          "red",
+          `sloc unable to parse file: ${name}, counting lines instead. ${lines} found`
+        );
       }
       const chars = fileContent.length;
       const stats: Stats = {

@@ -17,7 +17,7 @@ function getDirectoryStructure(dirPath, patterns = []) {
         itemStat = fs_1.default.statSync(dirPath);
     }
     catch (err) {
-        console.error(`Error reading path: ${err}`);
+        console.error(`File system read error:  ${err}`);
         return null;
     }
     if ((0, __1.checkForIgnore)(patterns, name)) {
@@ -60,19 +60,35 @@ function getDirectoryStructure(dirPath, patterns = []) {
             "rs",
             "r",
             "cs",
+            "wasm",
+            "webmanifest",
         ];
-        if (!commonExtensions.includes(extension)) {
-            console.log(`Reading file: ${dirPath}`);
+        if (commonExtensions.includes(extension)) {
             const fileContent = fs_1.default.readFileSync(dirPath, "utf-8");
             let lines = 0;
             try {
                 const slocStats = (0, sloc_1.default)(fileContent, extension);
                 lines = slocStats.source;
-                console.log(slocStats);
+                const headers = [
+                    "total",
+                    "source",
+                    "comment",
+                    "single",
+                    "block",
+                    "mixed",
+                    "empty",
+                    "todo",
+                    "blockEmpty",
+                ];
+                (0, __1.createSpacer)(2);
+                (0, __1.logWithColor)("yellow", (0, __1.createTable)(headers, Object.entries(slocStats).map(([key, value]) => [
+                    key,
+                    value.toString(),
+                ])));
             }
             catch (err) {
-                console.error(`Error reading file: ${err}`);
-                lines = fileContent.split("\n").length;
+                lines = fileContent.split(/\r?\n/).length;
+                (0, __1.logWithColor)("red", `sloc unable to parse file: ${name}, counting lines instead. ${lines} found`);
             }
             const chars = fileContent.length;
             const stats = {

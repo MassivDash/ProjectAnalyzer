@@ -18,12 +18,16 @@ const getStructureRatio = (stats) => {
     const complexity = baseComplexity * scaleFactor;
     return Math.floor(complexity);
 };
+(0, lib_1.createSpacer)(2);
+(0, lib_1.logWithColor)("magenta", (0, lib_1.createSplashScreen)());
+(0, lib_1.logWithColor)("green", "Starting analysis...");
+(0, lib_1.createSpacer)(2);
 const patterns = (0, lib_1.getPatterns)();
 const data = (0, lib_1.getDirectoryStructure)(process.cwd(), patterns);
 // sort the first level of children, move the .files to the end
 const structure = data === null || data === void 0 ? void 0 : data.item;
 if (!structure) {
-    console.error("No structure found");
+    (0, lib_1.logWithColor)("red", "Error reading directory structure");
     process.exit(1);
 }
 // Sort the top level of the structure
@@ -32,18 +36,41 @@ const finalStructure = Object.assign(Object.assign({}, structure), (structure.ch
 }));
 fs_1.default.writeFile("output.json", JSON.stringify(finalStructure, null, 2), (err) => {
     if (err) {
-        console.error(`Error writing file: ${err}`);
+        (0, lib_1.logWithColor)("red", `Error writing file: ${err}`);
+        (0, lib_1.createSpacer)(2);
         return;
     }
 });
 const dataStats = data === null || data === void 0 ? void 0 : data.stats;
 const finalScore = getStructureRatio(dataStats);
-console.log(dataStats, finalScore);
+const table = (0, lib_1.createTable)(["Metric", "Value"], Object.entries(dataStats).map(([key, value]) => [key, value.toString()]));
+(0, lib_1.createSpacer)(2);
+(0, lib_1.logWithColor)("yellow", table);
+(0, lib_1.createSpacer)(2);
+(0, lib_1.logWithColor)("blue", (0, lib_1.createAsciiBox)(finalScore));
+(0, lib_1.createSpacer)(2);
+const thisProject = { value: Number(finalScore), label: "this project" };
+const otherScores = [
+    { value: 1, label: "hello world" },
+    { value: 545038, label: "react" },
+    { value: 74227, label: "nest.js" },
+    { value: 2100659, label: "next.js" },
+];
+const sortedScores = [thisProject, ...otherScores].sort((a, b) => a.value - b.value);
+const points = sortedScores.map(({ value, label }, i) => ({
+    x: i,
+    y: value,
+    label: label,
+}));
+const graph = (0, lib_1.plotXYGraph)(points, 40, 40);
+console.log(graph);
 fs_1.default.writeFile("stats.json", JSON.stringify(Object.assign(Object.assign({}, dataStats), { finalScore }), null, 2), (err) => {
     if (err) {
         console.error(`Error writing file: ${err}`);
         return;
     }
+    (0, lib_1.createSpacer)(2);
     console.log("Successfully wrote file stats.json");
+    (0, lib_1.createSpacer)(2);
 });
 //# sourceMappingURL=index.js.map
