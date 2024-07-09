@@ -47,7 +47,11 @@ export function plotXYGraph(
     const x = Math.round(((point.x - xMin) / (xMax - xMin)) * (width - 2)) + 1;
     const y = Math.round(((yMax - point.y) / (yMax - yMin)) * (height - 2));
     if (x >= 0 && x < width && y >= 0 && y < height && point.label) {
-      graph[y][x + 1] = point.label || "";
+      const label =
+        point.label === "this project"
+          ? `\x1b[33m${point.label}\x1b[0m`
+          : point.label;
+      graph[y][x + 1] = label;
     }
   });
   // Print graph
@@ -73,8 +77,10 @@ export function createAsciiBox(number: number): string {
     horizontalBorder,
   ].join("\n");
 }
-export function createSpacer(lines: number): string {
-  return "\n".repeat(lines);
+export function createSpacer(lines: number): void {
+  for (let i = 0; i < lines; i++) {
+    console.log(" ");
+  }
 }
 
 export function createSplashScreen(): string {
@@ -106,5 +112,5 @@ export function logWithColor(color: string, message: string): void {
   };
 
   const colorCode = colors[color] || colors.reset;
-  process.stdout.write(`\r${colorCode}${message}${colors.reset}`);
+  process.stdout.write(`\r${colorCode}${message}${colors.reset}\x1b[K`);
 }

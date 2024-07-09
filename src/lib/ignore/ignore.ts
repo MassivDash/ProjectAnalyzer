@@ -12,6 +12,7 @@ const standardIgnorePatterns = [
   "yarn.lock",
   "stats.json",
   ".yarn",
+  "target",
 ];
 
 export const checkForIgnore = (patterns: string[], name: string) =>

@@ -10,7 +10,8 @@
     "test": "vitest",
     "lint": "eslint",
     "runFiles": "tsc --listFiles",
-    "testBundle": "npm run build && npm pack && npm i -g folderanalyzer-1.0.0.tgz"
+    "testBundle": "npm run build && npm pack && npm i -g folderanalyzer-1.0.0.tgz",
+    "runAnalyzer": "node ./test/testResultsLab/runAutoTests.js"
   },
   "bin": {
     "folderAnalyzer": "./index.js"

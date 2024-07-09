@@ -12,6 +12,14 @@ import {
   logWithColor,
   getStructureRatio,
 } from "./lib";
+
+import testScores from "../finalReport.json";
+
+type RecordedScore = {
+  finalScore: number;
+  name: string;
+};
+
 import type { Folder, Stats } from "./types/folders";
 
 interface Structure {
@@ -48,7 +56,6 @@ const finalStructure = {
 fs.writeFile("output.json", JSON.stringify(finalStructure, null, 2), (err) => {
   if (err) {
     logWithColor("red", `Error writing file: ${err}`);
-    createSpacer(2);
     return;
   }
 });
@@ -62,22 +69,40 @@ const table = createTable(
 );
 
 createSpacer(2);
+logWithColor("green", "Analysis complete");
+createSpacer(2);
+
+logWithColor("yellow", "Analysis results:");
+createSpacer(1);
 logWithColor("yellow", table);
 createSpacer(2);
-logWithColor("blue", createAsciiBox(finalScore));
+logWithColor("yellow", "Final score:");
+createSpacer(2);
+logWithColor("yellow", createAsciiBox(finalScore));
 createSpacer(2);
 
 const thisProject = { value: Number(finalScore), label: "this project" };
-const otherScores = [
-  { value: 1, label: "hello world" },
-  { value: 545038, label: "react" },
-  { value: 74227, label: "nest.js" },
-  { value: 2100659, label: "next.js" },
-];
+const otherScores = [{ value: 1, label: "hello world" }];
+const recordedScores: RecordedScore[] = (
+  testScores as { projects: RecordedScore[] }
+).projects;
 
-const sortedScores = [thisProject, ...otherScores].sort(
-  (a, b) => a.value - b.value
-);
+const sortedScores = [
+  thisProject,
+  ...otherScores,
+  ...recordedScores.map((item) => ({
+    value: item.finalScore,
+    label: item.name,
+  })),
+].sort((a, b) => {
+  if (a.value < b.value) {
+    return -1;
+  }
+  if (a.value > b.value) {
+    return 1;
+  }
+  return 0;
+});
 
 const points = sortedScores.map(({ value, label }, i) => ({
   x: i,
@@ -85,7 +110,7 @@ const points = sortedScores.map(({ value, label }, i) => ({
   label: label,
 }));
 
-const graph = plotXYGraph(points, 40, 40);
+const graph = plotXYGraph(points, 80, 40);
 
 console.log(graph);
 

@@ -16,6 +16,7 @@ export default [
       ...includeIgnoreFile(gitignorePath).ignores,
       "index.js",
       "dist-esm",
+      "runAutoTests.js"
     ],
   },
   { languageOptions: { globals: globals.browser } },

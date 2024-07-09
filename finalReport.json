@@ -1,0 +1,95 @@
+{
+  "totalProjects": 10,
+  "projects": [
+    {
+      "codelines": 8498,
+      "chars": 252521,
+      "folders": 63,
+      "files": 196,
+      "deepestLevel": 6,
+      "finalScore": 4130,
+      "name": "S3"
+    },
+    {
+      "codelines": 1031506,
+      "chars": 35998462,
+      "folders": 2088,
+      "files": 8492,
+      "deepestLevel": 12,
+      "finalScore": 897051,
+      "name": "angular"
+    },
+    {
+      "codelines": 690,
+      "chars": 18816,
+      "folders": 12,
+      "files": 42,
+      "deepestLevel": 4,
+      "finalScore": 242,
+      "name": "azureFn"
+    },
+    {
+      "codelines": 149497,
+      "chars": 5717744,
+      "folders": 501,
+      "files": 1880,
+      "deepestLevel": 15,
+      "finalScore": 118543,
+      "name": "biportal"
+    },
+    {
+      "codelines": 121478,
+      "chars": 3563867,
+      "folders": 591,
+      "files": 2005,
+      "deepestLevel": 7,
+      "finalScore": 79879,
+      "name": "nest"
+    },
+    {
+      "codelines": 1675551,
+      "chars": 84344594,
+      "folders": 7513,
+      "files": 16360,
+      "deepestLevel": 13,
+      "finalScore": 2100659,
+      "name": "next.js"
+    },
+    {
+      "codelines": 746718,
+      "chars": 22874058,
+      "folders": 536,
+      "files": 6441,
+      "deepestLevel": 11,
+      "finalScore": 565052,
+      "name": "react"
+    },
+    {
+      "codelines": 261712,
+      "chars": 6965036,
+      "folders": 3000,
+      "files": 7704,
+      "deepestLevel": 9,
+      "finalScore": 187187,
+      "name": "svelte"
+    },
+    {
+      "codelines": 41497,
+      "chars": 1193733,
+      "folders": 234,
+      "files": 838,
+      "deepestLevel": 8,
+      "finalScore": 24135,
+      "name": "valuations"
+    },
+    {
+      "codelines": 150388,
+      "chars": 4593935,
+      "folders": 94,
+      "files": 661,
+      "deepestLevel": 6,
+      "finalScore": 87132,
+      "name": "vue-core"
+    }
+  ]
+}

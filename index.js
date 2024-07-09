@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-var cli = require("./dist-esm/index.js");
+var cli = require("./dist-esm/src/index.js");

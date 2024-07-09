@@ -6,7 +6,6 @@ import {
   sortDirectoryStructure,
   createTable,
   logWithColor,
-  createSpacer,
 } from "../";
 import type { Folder, Stats } from "../../types/folders";
 
@@ -105,7 +104,6 @@ export function getDirectoryStructure(
           "blockEmpty",
         ];
 
-        createSpacer(2);
         logWithColor(
           "yellow",
           createTable(
