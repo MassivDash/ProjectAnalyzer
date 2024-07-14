@@ -1,14 +1,20 @@
 import { expect, test } from "vitest";
 import { getPatterns, checkForIgnore } from "./ignore";
+import { standardIgnorePatterns } from "./ignoreList";
 
 test("Reads the .gitignore file and returns an array of patterns", () => {
-  expect(getPatterns("./test/.gitignore")).toStrictEqual([
-    ".git",
-    "node_modules",
-    "coverage",
-    ".env",
-    "!vscode/extensions.json",
-  ]);
+  const ignoreList = [
+    ...new Set([
+      ".git",
+      "node_modules",
+      "coverage",
+      ".env",
+      "!vscode/extensions.json",
+      ...standardIgnorePatterns,
+    ]),
+  ];
+
+  expect(getPatterns("./test/testFolder/.gitignore")).toStrictEqual(ignoreList);
 });
 
 test("Checks if a file should be ignored", () => {

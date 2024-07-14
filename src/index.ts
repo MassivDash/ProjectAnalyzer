@@ -10,7 +10,7 @@ import {
   createSplashScreen,
   createSpacer,
   logWithColor,
-  getStructureRatio,
+  getComplexityScore,
 } from "./lib";
 
 import testScores from "../finalReport.json";
@@ -61,7 +61,9 @@ fs.writeFile("output.json", JSON.stringify(finalStructure, null, 2), (err) => {
 });
 
 const dataStats: Stats = data?.stats;
-const finalScore: number = getStructureRatio(dataStats);
+
+console.log(dataStats);
+const finalScore: number = getComplexityScore(dataStats);
 
 const table = createTable(
   ["Metric", "Value"],
@@ -82,14 +84,12 @@ logWithColor("yellow", createAsciiBox(finalScore));
 createSpacer(2);
 
 const thisProject = { value: Number(finalScore), label: "this project" };
-const otherScores = [{ value: 1, label: "hello world" }];
 const recordedScores: RecordedScore[] = (
   testScores as { projects: RecordedScore[] }
 ).projects;
 
 const sortedScores = [
   thisProject,
-  ...otherScores,
   ...recordedScores.map((item) => ({
     value: item.finalScore,
     label: item.name,

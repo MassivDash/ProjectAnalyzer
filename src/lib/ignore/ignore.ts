@@ -1,19 +1,6 @@
 import picomatch from "picomatch";
 import fs from "fs";
-
-const standardIgnorePatterns = [
-  "node_modules",
-  "dist",
-  ".git",
-  ".vscode",
-  ".idea",
-  ".DS_Store",
-  "package-lock.json",
-  "yarn.lock",
-  "stats.json",
-  ".yarn",
-  "target",
-];
+import { standardIgnorePatterns } from "./ignoreList";
 
 export const checkForIgnore = (patterns: string[], name: string) =>
   patterns.some((pattern) => {
@@ -29,12 +16,13 @@ export const getPatterns = (gitignore: string = "./.gitignore"): string[] => {
   try {
     const gitignoreContent = fs.readFileSync(gitignore, "utf8");
     patterns = gitignoreContent.split("\n").filter((e) => !!e);
-    return patterns.concat(standardIgnorePatterns);
   } catch (err) {
     if (err.code !== "ENOENT") {
-      console.error(`Error reading .gitignore file: ${err}`);
-      return patterns.concat(standardIgnorePatterns);
+      console.error(`Error reading .gitignore file: ${err}, using defaults`);
+      patterns = standardIgnorePatterns;
     }
   }
-  return patterns.concat(standardIgnorePatterns);
+
+  const uniquePatterns = [...new Set(patterns.concat(standardIgnorePatterns))];
+  return uniquePatterns;
 };

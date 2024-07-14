@@ -2,16 +2,13 @@ import { expect, test } from "vitest";
 import { getDirectoryStructure } from "./directory";
 
 const testFolder = {
-  name: "test",
+  name: "testFolder",
   children: [
     {
-      name: "testFolder",
+      name: "subfolder",
       children: [
         {
-          name: "testFile.test",
-        },
-        {
-          name: "testFile2.test",
+          name: "test.test",
         },
       ],
     },
@@ -19,7 +16,10 @@ const testFolder = {
       name: ".gitignore",
     },
     {
-      name: "test.test",
+      name: "testFile.test",
+    },
+    {
+      name: "testFile2.test",
     },
   ],
 };
@@ -33,7 +33,7 @@ const stats = {
 };
 
 test("Reads the test dir structure and returns an object", () => {
-  expect(getDirectoryStructure("./test")).toStrictEqual({
+  expect(getDirectoryStructure("./test/testFolder")).toStrictEqual({
     item: testFolder,
     stats,
   });

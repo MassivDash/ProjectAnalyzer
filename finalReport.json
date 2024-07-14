@@ -1,41 +1,32 @@
 {
-  "totalProjects": 10,
+  "totalProjects": 13,
   "projects": [
-    {
-      "codelines": 8498,
-      "chars": 252521,
-      "folders": 63,
-      "files": 196,
-      "deepestLevel": 6,
-      "finalScore": 4130,
-      "name": "S3"
-    },
     {
       "codelines": 1031506,
       "chars": 35998462,
       "folders": 2088,
       "files": 8492,
       "deepestLevel": 12,
-      "finalScore": 897051,
+      "finalScore": 33295,
       "name": "angular"
     },
     {
-      "codelines": 690,
-      "chars": 18816,
-      "folders": 12,
-      "files": 42,
-      "deepestLevel": 4,
-      "finalScore": 242,
-      "name": "azureFn"
+      "codelines": 746,
+      "chars": 31823,
+      "folders": 4,
+      "files": 21,
+      "deepestLevel": 3,
+      "finalScore": 14,
+      "name": "angular-starter"
     },
     {
-      "codelines": 149497,
-      "chars": 5717744,
-      "folders": 501,
-      "files": 1880,
-      "deepestLevel": 15,
-      "finalScore": 118543,
-      "name": "biportal"
+      "codelines": 39,
+      "chars": 644,
+      "folders": 1,
+      "files": 3,
+      "deepestLevel": 1,
+      "finalScore": 1,
+      "name": "helloWorld"
     },
     {
       "codelines": 121478,
@@ -43,8 +34,17 @@
       "folders": 591,
       "files": 2005,
       "deepestLevel": 7,
-      "finalScore": 79879,
+      "finalScore": 2960,
       "name": "nest"
+    },
+    {
+      "codelines": 306,
+      "chars": 9070,
+      "folders": 3,
+      "files": 15,
+      "deepestLevel": 2,
+      "finalScore": 5,
+      "name": "nest-starter"
     },
     {
       "codelines": 1675551,
@@ -56,13 +56,31 @@
       "name": "next.js"
     },
     {
+      "codelines": 277,
+      "chars": 5431,
+      "folders": 4,
+      "files": 9,
+      "deepestLevel": 2,
+      "finalScore": 3,
+      "name": "nextjs-blog"
+    },
+    {
       "codelines": 746718,
       "chars": 22874058,
       "folders": 536,
       "files": 6441,
       "deepestLevel": 11,
-      "finalScore": 565052,
+      "finalScore": 20913,
       "name": "react"
+    },
+    {
+      "codelines": 306,
+      "chars": 9230,
+      "folders": 3,
+      "files": 17,
+      "deepestLevel": 2,
+      "finalScore": 6,
+      "name": "react-starter"
     },
     {
       "codelines": 261712,
@@ -70,17 +88,17 @@
       "folders": 3000,
       "files": 7704,
       "deepestLevel": 9,
-      "finalScore": 187187,
+      "finalScore": 6907,
       "name": "svelte"
     },
     {
-      "codelines": 41497,
-      "chars": 1193733,
-      "folders": 234,
-      "files": 838,
-      "deepestLevel": 8,
-      "finalScore": 24135,
-      "name": "valuations"
+      "codelines": 14384,
+      "chars": 160352,
+      "folders": 10,
+      "files": 36,
+      "deepestLevel": 5,
+      "finalScore": 104,
+      "name": "svelte-starter"
     },
     {
       "codelines": 150388,
@@ -88,8 +106,17 @@
       "folders": 94,
       "files": 661,
       "deepestLevel": 6,
-      "finalScore": 87132,
+      "finalScore": 3231,
       "name": "vue-core"
+    },
+    {
+      "codelines": 209,
+      "chars": 4885,
+      "folders": 5,
+      "files": 12,
+      "deepestLevel": 3,
+      "finalScore": 4,
+      "name": "vue-starter"
     }
   ]
 }

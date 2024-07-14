@@ -87,7 +87,7 @@ export function createSplashScreen(): string {
   // Read package.json
 
   // Extract name and version
-  const name = "Folder Analyser";
+  const name = "Project Analyser";
   const version = "1.0.0";
 
   // Create the splash screen content
@@ -112,5 +112,8 @@ export function logWithColor(color: string, message: string): void {
   };
 
   const colorCode = colors[color] || colors.reset;
-  process.stdout.write(`\r${colorCode}${message}${colors.reset}\x1b[K`);
+
+  if (!process.env.BLOCK_STDOUT) {
+    process.stdout.write(`\r${colorCode}${message}${colors.reset}\x1b[K`);
+  }
 }
