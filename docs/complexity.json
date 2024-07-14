@@ -1,0 +1,92 @@
+[
+  {
+    "files": 2,
+    "folders": 1,
+    "lines": 69,
+    "chars": 644,
+    "depth": 1,
+    "name": "A",
+    "complexity": 1
+  },
+  {
+    "files": 5,
+    "folders": 2,
+    "lines": 100,
+    "chars": 1000,
+    "depth": 2,
+    "name": "B",
+    "complexity": 3
+  },
+  {
+    "files": 10,
+    "folders": 3,
+    "lines": 500,
+    "chars": 5000,
+    "depth": 3,
+    "name": "C",
+    "complexity": 7
+  },
+  {
+    "files": 20,
+    "folders": 5,
+    "lines": 1000,
+    "chars": 10000,
+    "depth": 4,
+    "name": "D",
+    "complexity": 12
+  },
+  {
+    "files": 50,
+    "folders": 10,
+    "lines": 5000,
+    "chars": 50000,
+    "depth": 5,
+    "name": "E",
+    "complexity": 45
+  },
+  {
+    "files": 100,
+    "folders": 15,
+    "lines": 10000,
+    "chars": 100000,
+    "depth": 6,
+    "name": "F",
+    "complexity": 93
+  },
+  {
+    "files": 200,
+    "folders": 20,
+    "lines": 20000,
+    "chars": 200000,
+    "depth": 7,
+    "name": "G",
+    "complexity": 199
+  },
+  {
+    "files": 500,
+    "folders": 30,
+    "lines": 50000,
+    "chars": 500000,
+    "depth": 8,
+    "name": "H",
+    "complexity": 544
+  },
+  {
+    "files": 1000,
+    "folders": 50,
+    "lines": 100000,
+    "chars": 1000000,
+    "depth": 9,
+    "name": "I",
+    "complexity": 1157
+  },
+  {
+    "files": 2000,
+    "folders": 100,
+    "lines": 200000,
+    "chars": 2000000,
+    "depth": 10,
+    "name": "J",
+    "complexity": 2467
+  }
+]

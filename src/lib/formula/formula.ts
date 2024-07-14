@@ -16,21 +16,19 @@ export const getComplexityScore = (
 ) => {
   const { codelines, chars, folders, files, deepestLevel } = stats;
 
-  const fileToDirectoryRatio =
-    files / folders / baseStats.normalizedFoldersBase;
+  const fileToDirectoryRatio = files / folders;
   const normalizedLines = codelines / baseStats.normalizedLinesBase;
-  const normializedChars = chars / baseStats.normalizedCharsBase;
+  const normalizedChars = chars / baseStats.normalizedCharsBase;
 
   const baseComplexity =
     fileToDirectoryRatio * 0.2 +
     normalizedLines * 0.2 +
-    normializedChars * 0.2 +
+    normalizedChars * 0.2 +
     deepestLevel * 0.1;
 
   const scaleFactor = 1 + Math.log2(files + folders + 1);
 
   const complexity = baseComplexity * scaleFactor;
-  console.log(complexity);
 
   return Math.floor(complexity);
 };
