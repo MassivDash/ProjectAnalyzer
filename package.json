@@ -13,6 +13,9 @@
     "testBundle": "npm run build && npm pack && npm i -g project-analyzer-0.5.0.tgz",
     "runAnalyzer": "node ./test/testResultsLab/runAutoTests.js"
   },
+  "repository": {
+    "url": "https://github.com/MassivDash/ProjectAnalyzer"
+  },
   "bin": {
     "projectAnalyzer": "index.js"
   },
