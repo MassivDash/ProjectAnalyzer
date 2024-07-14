@@ -14,7 +14,7 @@
     "runAnalyzer": "node ./test/testResultsLab/runAutoTests.js"
   },
   "bin": {
-    "projectAnalyzer": "./index.js"
+    "projectAnalyzer": "index.js"
   },
   "author": "Luke Celitan, <@spaceoutpl>",
   "license": "ISC",
