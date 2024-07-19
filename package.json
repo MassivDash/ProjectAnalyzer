@@ -8,6 +8,7 @@
     "start": "node index.js",
     "build": "tsc -p tsconfig.json",
     "test": "BLOCK_STDOUT=true vitest run",
+    "testRelated": "BLOCK_STDOUT=true vitest related --run",
     "lint": "eslint",
     "runFiles": "tsc --listFiles",
     "testBundle": "npm run build && npm pack && npm i -g project-analyzer-0.5.2.tgz",
@@ -28,6 +29,8 @@
     "sloc": "^0.3.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@eslint/compat": "^1.1.0",
     "@eslint/js": "^9.5.0",
     "@types/mime-types": "^2.1.4",
