@@ -21,3 +21,6 @@ pre-commit:
     jest:
       glob: "*.{js,ts,jsx,tsx}"
       run: npx jest {staged_files}
+    build_types:
+      glob: "*.{ts,tsx}"
+      run: npm run build
