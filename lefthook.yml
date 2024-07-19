@@ -18,9 +18,14 @@ pre-commit:
     eslint:
       glob: "*.{js,ts,jsx,tsx}"
       run: npx eslint {staged_files}
-    jest:
+    vitest:
       glob: "*.{js,ts,jsx,tsx}"
-      run: npx jest {staged_files}
+      run: npm run testRelated
     build_types:
       glob: "*.{ts,tsx}"
       run: npm run build
+
+commit-msg:
+  commands:
+    validate:
+      run: npx commitlint --edit

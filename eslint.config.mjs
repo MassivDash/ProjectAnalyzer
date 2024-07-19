@@ -18,6 +18,7 @@ export default [
       "dist-esm",
       "runAutoTests.js",
       "test/testProject/index.js",
+      "commitlint.config.js",
     ],
   },
   { languageOptions: { globals: globals.browser } },
