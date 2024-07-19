@@ -5,7 +5,7 @@ export declare function plotXYGraph(points: {
     label?: string;
 }[], width?: number, height?: number): void;
 export declare function createAsciiBox(number: number): string;
-export declare function createSpacer(lines: number): string;
+export declare function createSpacer(lines: number): void;
 export declare function createSplashScreen(): string;
 export declare function logWithColor(color: string, message: string): void;
 //# sourceMappingURL=display.d.ts.map
