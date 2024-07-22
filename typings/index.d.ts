@@ -10,4 +10,5 @@ interface Structure {
 }
 declare function runAnalysis(): void;
 export { runAnalysis, RecordedScore, Structure, Stats, getComplexityScore, getDirectoryStructure, sortDirectoryStructure, };
+export default runAnalysis;
 //# sourceMappingURL=index.d.ts.map
