@@ -38,18 +38,18 @@ function runAnalysis() {
 
   const data: Structure | null = getDirectoryStructure(process.cwd(), patterns);
 
+  if (!data) {
+    logWithColor("red", "Error reading directory structure");
+    throw new Error("Error reading directory structure");
+  }
+
   // sort the first level of children, move the .files to the end
   const structure = data?.item;
-
-  if (!structure) {
-    logWithColor("red", "Error reading directory structure");
-    process.exit(1);
-  }
 
   // Sort the top level of the structure
   const finalStructure = {
     ...structure,
-    ...(structure.children && {
+    ...(structure?.children && {
       children: sortDirectoryStructure(structure.children),
     }),
   };
@@ -60,12 +60,24 @@ function runAnalysis() {
     (err) => {
       if (err) {
         logWithColor("red", `Error writing file: ${err}`);
-        return;
+        throw new Error(`Error writing file: ${err}`);
       }
     }
   );
 
   const dataStats: Stats = data?.stats;
+
+  if (
+    !dataStats ||
+    !dataStats.files ||
+    !dataStats.folders ||
+    !dataStats.chars ||
+    !dataStats.codelines ||
+    !dataStats.deepestLevel
+  ) {
+    logWithColor("red", "Error reading directory stats, exiting");
+    throw new Error("Error reading directory stats");
+  }
 
   const finalScore: number = getComplexityScore(dataStats);
 
@@ -123,8 +135,7 @@ function runAnalysis() {
     JSON.stringify({ ...dataStats, finalScore }, null, 2),
     (err) => {
       if (err) {
-        console.error(`Error writing file: ${err}`);
-        return;
+        throw new Error(`Error writing file: ${err}`);
       }
 
       createSpacer(2);
@@ -143,3 +154,5 @@ export {
   getDirectoryStructure,
   sortDirectoryStructure,
 };
+
+export default runAnalysis;

@@ -17,10 +17,8 @@ export const getPatterns = (gitignore: string = "./.gitignore"): string[] => {
     const gitignoreContent = fs.readFileSync(gitignore, "utf8");
     patterns = gitignoreContent.split("\n").filter((e) => !!e);
   } catch (err) {
-    if (err.code !== "ENOENT") {
-      console.error(`Error reading .gitignore file: ${err}, using defaults`);
-      patterns = standardIgnorePatterns;
-    }
+    console.error(`Error reading .gitignore file: ${err}, using defaults`);
+    patterns = standardIgnorePatterns;
   }
 
   const uniquePatterns = [...new Set(patterns.concat(standardIgnorePatterns))];

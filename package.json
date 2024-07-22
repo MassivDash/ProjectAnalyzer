@@ -7,8 +7,9 @@
   "scripts": {
     "start": "node index.js",
     "build": "tsc -p tsconfig.json",
-    "test": "BLOCK_STDOUT=true vitest run",
-    "testRelated": "BLOCK_STDOUT=true vitest related --run",
+    "test": "vitest run",
+    "testRelated": "vitest related --run",
+    "coverage": "vitest run --coverage",
     "lint": "eslint",
     "runFiles": "tsc --listFiles",
     "testBundle": "npm run build && npm pack && npm i -g project-analyzer-0.5.2.tgz",
@@ -42,7 +43,8 @@
     "lefthook": "^1.7.4",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.13.1",
-    "vitest": "^1.6.0"
+    "vitest": "^2.0.3",
+    "@vitest/coverage-v8": "^2.0.3"
   },
   "overrides": {
     "eslint": "^9.5.0"
