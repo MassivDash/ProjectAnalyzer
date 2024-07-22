@@ -10,6 +10,7 @@ export default defineConfig({
       "**/dist-esm/*",
       "**/types/**",
       "commitlint.config.js",
+      "**/src/cli.ts",
     ],
     coverage: {
       exclude: [
