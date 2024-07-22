@@ -11,5 +11,4 @@ export const standardIgnorePatterns = [
   ".yarn",
   "target",
   "output.json",
-  "stats.json",
 ];

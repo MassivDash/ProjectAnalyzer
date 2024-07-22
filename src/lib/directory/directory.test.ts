@@ -1,4 +1,4 @@
-import { expect, test } from "vitest";
+import { expect, test, vi, beforeAll, afterAll } from "vitest";
 import { getDirectoryStructure } from "./directory";
 
 const testFolder = {
@@ -32,9 +32,37 @@ const stats = {
   folders: 2,
 };
 
+vi.mock("console", () => ({
+  log: () => true,
+  error: () => true,
+}));
+
+vi.mock("process", () => ({
+  stderr: {
+    write: () => true,
+  },
+}));
+
+const consoleErrorSpy = vi
+  .spyOn(console, "error")
+  .mockImplementation(() => true);
+
+beforeAll(() => {
+  vi.clearAllMocks();
+});
+
+afterAll(() => {
+  vi.clearAllMocks();
+});
+
 test("Reads the test dir structure and returns an object", () => {
   expect(getDirectoryStructure("./test/testFolder")).toStrictEqual({
     item: testFolder,
     stats,
   });
+});
+
+test("errors if the directory does not exist", () => {
+  expect(getDirectoryStructure("./test/nonExistentFolder")).toEqual(null);
+  expect(consoleErrorSpy).toHaveBeenCalled();
 });

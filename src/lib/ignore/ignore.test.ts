@@ -26,3 +26,9 @@ test("Checks if a file should be ignored", () => {
   ).toBeFalsy();
   expect(checkForIgnore(["!.github/actions/*/dist"], "next.js")).toBeFalsy();
 });
+
+test("It will return the defaults, if no .gitignore file is found", () => {
+  expect(getPatterns("./test/testFolder/.gitignore2")).toStrictEqual([
+    ...standardIgnorePatterns,
+  ]);
+});
