@@ -21,6 +21,7 @@ export default defineConfig({
         "**/types/**",
         "commitlint.config.js",
         "**/typings/**",
+        "**/src/cli.ts",
       ],
       reporter: ["text", "json-summary", "json"],
       // If you want a coverage reports even if your tests are failing, include the reportOnFailure option
