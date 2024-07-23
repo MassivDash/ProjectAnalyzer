@@ -1,8 +1,31 @@
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    exclude: ["**/test/testResultsLab/**", "node_modules"],
+    exclude: [
+      ...configDefaults.exclude,
+      "**/test/testResultsLab/**",
+      "**/test/testProject/**",
+      "**/node_modules/**",
+      "**/dist-esm/*",
+      "**/types/**",
+      "commitlint.config.js",
+    ],
+    coverage: {
+      exclude: [
+        ...configDefaults.exclude,
+        "**/test/testResultsLab/**",
+        "**/test/testProject/**",
+        "**/node_modules/**",
+        "**/dist-esm/*",
+        "**/types/**",
+        "commitlint.config.js",
+        "**/typings/**",
+      ],
+      reporter: ["text", "json-summary", "json"],
+      // If you want a coverage reports even if your tests are failing, include the reportOnFailure option
+      reportOnFailure: true,
+    },
     pool: "forks",
     environmentOptions: {
       // You can set a default value here

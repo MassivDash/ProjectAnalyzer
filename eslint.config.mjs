@@ -16,7 +16,9 @@ export default [
       ...includeIgnoreFile(gitignorePath).ignores,
       "index.js",
       "dist-esm",
-      "runAutoTests.js"
+      "runAutoTests.js",
+      "test/testProject/index.js",
+      "commitlint.config.js",
     ],
   },
   { languageOptions: { globals: globals.browser } },
