@@ -2,6 +2,10 @@ name: "Test"
 on:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -22,6 +26,8 @@ jobs:
         run: npm install
       - name: "Test"
         run: npm run coverage
+      - name: Run project analyzer
+      - run: npm i -g project-analyzer && project-analyzer -m
       - name: "Report Coverage"
         # Set if: always() to also generate the report if tests are failing
         # Only works if you set `reportOnFailure: true` in your vite config as specified above
@@ -42,3 +48,9 @@ jobs:
         with:
           recreate: true
           path: code-coverage-results.md
+      - name: Add Project Analysis PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          recreate: true
+          path: anlysis.md
