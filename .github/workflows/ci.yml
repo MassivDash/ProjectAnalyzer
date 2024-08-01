@@ -53,4 +53,4 @@ jobs:
         if: github.event_name == 'pull_request'
         with:
           recreate: true
-          path: anlysis.md
+          path: analysis.md
