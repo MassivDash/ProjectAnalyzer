@@ -1,3 +1,4 @@
+import { RecordedScore } from "src";
 import type { Folder } from "../../types/folders";
 
 export function sortDirectoryStructure(folders: Folder[]) {
@@ -23,3 +24,13 @@ export function sortDirectoryStructure(folders: Folder[]) {
     return a.name.localeCompare(b.name);
   });
 }
+
+export const sortScores = (a: RecordedScore, b: RecordedScore) => {
+  if (a.finalScore < b.finalScore) {
+    return -1;
+  }
+  if (a.finalScore > b.finalScore) {
+    return 1;
+  }
+  return 0;
+};

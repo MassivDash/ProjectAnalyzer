@@ -5,3 +5,4 @@ dist-esm
 *.tgz
 testResultsLab
 coverage
+analysis.md

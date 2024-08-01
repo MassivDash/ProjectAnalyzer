@@ -117,3 +117,16 @@ export function logWithColor(color: string, message: string): void {
     process.stdout.write(`\r${colorCode}${message}${colors.reset}\x1b[K`);
   }
 }
+
+export const silentMode = (active: boolean) => {
+  if (active) {
+    console.log = () => {
+      // do nothing
+    };
+
+    process.stdout.write = () => {
+      return true;
+      // do nothing
+    };
+  }
+};

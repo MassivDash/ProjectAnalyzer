@@ -43,23 +43,24 @@ test("calls getDirectoryStructure function", async () => {
 });
 
 test("calls runAnalysis function", async () => {
-  main.runAnalysis();
+  main.runAnalysis({ markdown: true });
   expect(mainMock).toHaveBeenCalled();
   expect(consoleLogMock).toHaveBeenCalled();
   expect(getDirectoryStructureMock).toHaveBeenCalled();
   expect(getComplexityScoreMock).toHaveBeenCalled();
   expect(processStdoutWriteMock).toHaveBeenCalled();
+  expect(fsWriteFileMock).toHaveBeenCalled();
 });
 
 test("throws error on no structure", async () => {
-  getDirectoryStructureMock.mockImplementation(() => null);
+  getDirectoryStructureMock.mockImplementationOnce(() => null);
   expect(() => main.runAnalysis()).toThrowError(
     "Error reading directory structure"
   );
 });
 
 test("throws error on no stats", async () => {
-  getDirectoryStructureMock.mockImplementation(() => ({
+  getDirectoryStructureMock.mockImplementationOnce(() => ({
     item: {} as Folder,
     stats: null as unknown as Stats,
   }));
@@ -69,10 +70,10 @@ test("throws error on no stats", async () => {
 });
 
 test("throws error on write file", async () => {
-  fsWriteFileMock.mockImplementation((() => {
-    throw new Error("Error writing file: stats.json");
+  fsWriteFileMock.mockImplementationOnce((() => {
+    throw new Error("Error writing file: analysis.md");
   }) as unknown as typeof fs.writeFile);
-  expect(() => main.runAnalysis()).toThrowError(
-    "Error writing file: stats.json"
+  expect(() => main.runAnalysis({ markdown: true })).toThrowError(
+    "Error writing file: analysis.md"
   );
 });

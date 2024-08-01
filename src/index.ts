@@ -1,5 +1,3 @@
-import fs from "fs";
-
 import {
   sortDirectoryStructure,
   getDirectoryStructure,
@@ -11,7 +9,14 @@ import {
   createSpacer,
   logWithColor,
   getComplexityScore,
+  writeFile,
+  convertToMarkdown,
+  printTree,
+  collectArgs,
+  silentMode,
+  sortScores,
 } from "./lib";
+import type { Config } from "./types";
 
 import testScores from "./data/finalReport.json";
 
@@ -20,23 +25,29 @@ type RecordedScore = {
   name: string;
 };
 
-import type { Folder, Stats } from "./types/folders";
+import type { Structure, Stats } from "./types/folders";
 
-interface Structure {
-  item: Folder;
-  stats: Stats;
-}
+function runAnalysis(config?: Config | undefined): void {
+  const _config = config || collectArgs();
 
-function runAnalysis() {
+  // Kill consoles if silent mode is activated
+  silentMode(_config?.silent || false);
+
+  // Splash screen
   createSpacer(2);
   logWithColor("magenta", createSplashScreen());
   logWithColor("green", "Starting analysis...");
-
   createSpacer(2);
 
-  const patterns = getPatterns();
+  // Get the ignore patterns, for folder analysis,
+  //.gitigonre + standard list is used
+  const ignorePatterns = getPatterns();
 
-  const data: Structure | null = getDirectoryStructure(process.cwd(), patterns);
+  // Get the directory structure
+  const data: Structure | null = getDirectoryStructure(
+    process.cwd(),
+    ignorePatterns
+  );
 
   if (!data) {
     logWithColor("red", "Error reading directory structure");
@@ -54,16 +65,14 @@ function runAnalysis() {
     }),
   };
 
-  fs.writeFile(
-    "output.json",
-    JSON.stringify(finalStructure, null, 2),
-    (err) => {
-      if (err) {
-        logWithColor("red", `Error writing file: ${err}`);
-        throw new Error(`Error writing file: ${err}`);
-      }
-    }
-  );
+  // -t, --tree
+  // output folder structure as a tree
+
+  if (_config?.tree) {
+    createSpacer(2);
+    printTree(finalStructure);
+    createSpacer(2);
+  }
 
   const dataStats: Stats = data?.stats;
 
@@ -99,50 +108,31 @@ function runAnalysis() {
   logWithColor("yellow", createAsciiBox(finalScore));
   createSpacer(2);
 
-  const thisProject = { value: Number(finalScore), label: "this project" };
+  const thisProject = { finalScore: Number(finalScore), name: "this project" };
   const recordedScores: RecordedScore[] = (
     testScores as { projects: RecordedScore[] }
   ).projects;
 
-  const sortedScores = [
-    thisProject,
-    ...recordedScores.map((item) => ({
-      value: item.finalScore,
-      label: item.name,
-    })),
-  ].sort((a, b) => {
-    if (a.value < b.value) {
-      return -1;
-    }
-    if (a.value > b.value) {
-      return 1;
-    }
-    return 0;
-  });
+  const sortedScores = [thisProject, ...recordedScores].sort(sortScores);
 
-  const points = sortedScores.map(({ value, label }, i) => ({
+  const points = sortedScores.map(({ finalScore, name }, i) => ({
     x: i,
-    y: value,
-    label: label,
+    y: finalScore,
+    label: name,
   }));
 
-  const graph = plotXYGraph(points, 80, 40);
+  const graph = plotXYGraph(points, 40, 40);
 
   console.log(graph);
 
-  fs.writeFile(
-    "stats.json",
-    JSON.stringify({ ...dataStats, finalScore }, null, 2),
-    (err) => {
-      if (err) {
-        throw new Error(`Error writing file: ${err}`);
-      }
-
-      createSpacer(2);
-      console.log("Successfully wrote file stats.json");
-      createSpacer(2);
-    }
-  );
+  if (_config?.markdown) {
+    // Write the markdown file
+    const markdown = convertToMarkdown({ dataStats, finalScore });
+    writeFile(
+      _config.reportPath ? _config.reportPath : "analysis.md",
+      markdown
+    );
+  }
 }
 
 export {

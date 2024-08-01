@@ -9,4 +9,8 @@ export interface Stats {
     files: number;
     deepestLevel: number;
 }
+export interface Structure {
+    item: Folder;
+    stats: Stats;
+}
 //# sourceMappingURL=folders.d.ts.map
