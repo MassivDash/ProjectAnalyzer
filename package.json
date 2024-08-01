@@ -1,6 +1,6 @@
 {
   "name": "project-analyzer",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Node cli utility for analyzing project complexity structure ",
   "main": "index.js",
   "types": "./typings/index.d.ts",
@@ -10,6 +10,7 @@
     "test": "vitest run",
     "testRelated": "vitest related --run",
     "coverage": "vitest run --coverage",
+    "coverageIcon": "npx make-coverage-badge --output-path ./badges/coverage.svg",
     "lint": "eslint",
     "runFiles": "tsc --listFiles",
     "testBundle": "npm run build && npm pack && npm i -g project-analyzer-0.7.0.tgz",
