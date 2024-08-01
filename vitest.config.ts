@@ -24,7 +24,7 @@ export default defineConfig({
         "**/typings/**",
         "**/src/cli.ts",
       ],
-      reporter: ["text", "json-summary", "json"],
+      reporter: ["text", "json-summary", "json", "cobertura"],
       // If you want a coverage reports even if your tests are failing, include the reportOnFailure option
       reportOnFailure: true,
     },
