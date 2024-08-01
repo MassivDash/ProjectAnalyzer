@@ -10,6 +10,7 @@
     "test": "vitest run",
     "testRelated": "vitest related --run",
     "coverage": "vitest run --coverage",
+    "coverageIcon": "npx make-coverage-badge --output-path ./badges/coverage.svg",
     "lint": "eslint",
     "runFiles": "tsc --listFiles",
     "testBundle": "npm run build && npm pack && npm i -g project-analyzer-0.7.0.tgz",
