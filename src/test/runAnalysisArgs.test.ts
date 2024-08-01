@@ -1,5 +1,5 @@
 import * as main from "../index";
-import { test, expect, vi, beforeAll, afterAll } from "vitest";
+import { test, expect, vi, beforeEach, afterAll } from "vitest";
 import * as directory from "../lib/directory/directory";
 import * as formula from "../lib/formula/formula";
 import fs from "fs";
@@ -7,6 +7,7 @@ import fs from "fs";
 vi.mock("process", () => ({
   stdout: {
     write: () => true,
+    exit: vi.fn(),
   },
 }));
 
@@ -26,8 +27,9 @@ const getDirectoryStructureMock = vi.spyOn(directory, "getDirectoryStructure");
 const getComplexityScoreMock = vi.spyOn(formula, "getComplexityScore");
 
 const consoleLogMock = vi.spyOn(console, "log").mockImplementation(() => true);
+const processExitMock = vi.spyOn(process, "exit");
 
-beforeAll(() => {
+beforeEach(() => {
   vi.clearAllMocks();
 });
 
@@ -35,18 +37,46 @@ afterAll(() => {
   vi.clearAllMocks();
 });
 
-test("calls runAnalysis silent", async () => {
-  main.runAnalysis({ silent: true });
+test("calls runAnalysis help", async () => {
+  vi.spyOn(process, "argv", "get").mockReturnValue([
+    "node",
+    "script.js",
+    "--help",
+  ]);
+
+  processExitMock.mockImplementation((() => {
+    return true;
+  }) as never);
+
+  main.runAnalysis();
   expect(mainMock).toHaveBeenCalled();
-  expect(consoleLogMock).not.toHaveBeenCalled();
+  expect(consoleLogMock).toHaveBeenCalled();
+  expect(fsWriteFileMock).not.toHaveBeenCalled();
+  expect(processExitMock).toHaveBeenCalled();
+});
+
+test("calls runAnalysis path ", async () => {
+  main.runAnalysis({ reportPath: "test.md", markdown: true });
+  expect(mainMock).toHaveBeenCalled();
+  expect(consoleLogMock).toHaveBeenCalled();
   expect(getDirectoryStructureMock).toHaveBeenCalled();
   expect(getComplexityScoreMock).toHaveBeenCalled();
-  expect(processStdoutWriteMock).not.toHaveBeenCalled();
+  expect(processStdoutWriteMock).toHaveBeenCalled();
+  expect(fsWriteFileMock).toHaveBeenCalled();
+});
+
+test("calls runAnalysis tree", async () => {
+  main.runAnalysis({ tree: true });
+  expect(mainMock).toHaveBeenCalled();
+  expect(consoleLogMock).toHaveBeenCalled();
+  expect(getDirectoryStructureMock).toHaveBeenCalled();
+  expect(getComplexityScoreMock).toHaveBeenCalled();
+  expect(processStdoutWriteMock).toHaveBeenCalled();
   expect(fsWriteFileMock).not.toHaveBeenCalled();
 });
 
 test("calls runAnalysis silent", async () => {
-  main.runAnalysis({ reportPath: "test.md" });
+  main.runAnalysis({ silent: true });
   expect(mainMock).toHaveBeenCalled();
   expect(consoleLogMock).not.toHaveBeenCalled();
   expect(getDirectoryStructureMock).toHaveBeenCalled();

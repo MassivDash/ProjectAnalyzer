@@ -111,11 +111,9 @@ export function logWithColor(color: string, message: string): void {
     reset: "\x1b[0m",
   };
 
-  const colorCode = colors[color] || colors.reset;
+  const colorCode = colors[color];
 
-  if (!process.env.BLOCK_STDOUT) {
-    process.stdout.write(`\r${colorCode}${message}${colors.reset}\x1b[K`);
-  }
+  process.stdout.write(`\r${colorCode}${message}${colors.reset}\x1b[K`);
 }
 
 export const silentMode = (active: boolean) => {

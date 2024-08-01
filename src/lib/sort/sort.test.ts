@@ -1,4 +1,4 @@
-import { sortDirectoryStructure } from "./sort";
+import { sortDirectoryStructure, sortScores } from "./sort";
 import { describe, test, expect } from "vitest";
 
 describe("sortDirectoryStructure", () => {
@@ -61,5 +61,35 @@ test("should sort the array with mixed folders and files correctly", () => {
     { name: "file1.txt" },
     { name: "file2.txt" },
     { name: "file3.txt" },
+  ]);
+});
+
+test("should sort scores correctly", () => {
+  const scores = [{ finalScore: 10 }, { finalScore: 5 }, { finalScore: 15 }];
+
+  const sortedScores = scores.sort(sortScores);
+
+  expect(sortedScores).toEqual([
+    { finalScore: 5 },
+    { finalScore: 10 },
+    { finalScore: 15 },
+  ]);
+});
+
+test("should sort scores correctly with equal scores", () => {
+  const scores = [
+    { finalScore: 10 },
+    { finalScore: 5 },
+    { finalScore: 15 },
+    { finalScore: 10 },
+  ];
+
+  const sortedScores = scores.sort(sortScores);
+
+  expect(sortedScores).toEqual([
+    { finalScore: 5 },
+    { finalScore: 10 },
+    { finalScore: 10 },
+    { finalScore: 15 },
   ]);
 });

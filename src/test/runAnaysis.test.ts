@@ -1,5 +1,5 @@
 import * as main from "../index";
-import { test, expect, vi, beforeAll, afterAll } from "vitest";
+import { test, expect, vi, beforeEach, afterAll } from "vitest";
 import * as directory from "../lib/directory/directory";
 import * as formula from "../lib/formula/formula";
 import fs from "fs";
@@ -29,7 +29,7 @@ const getComplexityScoreMock = vi.spyOn(formula, "getComplexityScore");
 
 const consoleLogMock = vi.spyOn(console, "log").mockImplementation(() => true);
 
-beforeAll(() => {
+beforeEach(() => {
   vi.clearAllMocks();
 });
 

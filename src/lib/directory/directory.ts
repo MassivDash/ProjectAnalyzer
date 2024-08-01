@@ -7,6 +7,7 @@ import {
   createTable,
   logWithColor,
 } from "../";
+import { commonExtensions } from "./commonExtensions";
 import type { Folder, Stats } from "../../types/folders";
 
 interface SlocStats {
@@ -25,7 +26,7 @@ export function getDirectoryStructure(
   dirPath: string,
   patterns: string[] = []
 ): { item: Folder; stats: Stats } | null {
-  const name = path.basename(dirPath) || dirPath;
+  const name = path.basename(dirPath);
   const item: Folder = { name };
   let itemStat: fs.Stats;
 
@@ -43,45 +44,8 @@ export function getDirectoryStructure(
   }
 
   if (itemStat.isFile()) {
-    const fullName = path.extname(dirPath).toLowerCase();
+    const fullName = path?.extname(dirPath).toLowerCase();
     const extension = fullName.split(".").pop() || "";
-    const commonExtensions = [
-      "md",
-      "mdx",
-      "js",
-      "ts",
-      "tsx",
-      "jsx",
-      "astro",
-      "mjs",
-      "cjs",
-      "json",
-      "yml",
-      "yaml",
-      "toml",
-      "html",
-      "css",
-      "scss",
-      "sass",
-      "less",
-      "styl",
-      "graphql",
-      "gql",
-      "vue",
-      "svelte",
-      "php",
-      "py",
-      "rb",
-      "java",
-      "kt",
-      "swift",
-      "go",
-      "rs",
-      "r",
-      "cs",
-      "wasm",
-      "webmanifest",
-    ];
 
     if (commonExtensions.includes(extension)) {
       const fileContent = fs.readFileSync(dirPath, "utf-8");
@@ -141,9 +105,7 @@ export function getDirectoryStructure(
       };
       return { item, stats };
     }
-  }
-
-  if (itemStat.isDirectory()) {
+  } else {
     const children = fs
       .readdirSync(dirPath)
       .map((child) =>
@@ -188,6 +150,4 @@ export function getDirectoryStructure(
 
     return { item, stats: totalStats };
   }
-
-  return null;
 }
