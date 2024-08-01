@@ -40,4 +40,3 @@ jobs:
           release_name: v0.7.${{steps.current_date.outputs.time}}.${{github.run_number}}
           draft: false
           prerelease: false
-          generate_release_notes: true
