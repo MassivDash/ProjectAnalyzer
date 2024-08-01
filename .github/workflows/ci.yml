@@ -27,7 +27,7 @@ jobs:
       - name: "Test"
         run: npm run coverage
       - name: Run project analyzer
-      - run: npm i -g project-analyzer && project-analyzer -m
+        run: npm i -g project-analyzer && project-analyzer -m
       - name: "Report Coverage"
         # Set if: always() to also generate the report if tests are failing
         # Only works if you set `reportOnFailure: true` in your vite config as specified above
