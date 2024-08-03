@@ -106,6 +106,6 @@ Thank you for choosing Project Analyzer for your code analysis needs!
 
 <img src="https://spaceout.pl/icons/icon-96x96.png?v=c01d3dc2404b91dfce33d962ff296151" alt="spaceout.pl" />
 
-Luke Celitan, [Spaceghost](https://spaceout.pl/about)
+Luke Celitan, [Spaceghost](https://spaceout.pl/)
 
-x: [@Spaceout.pl] https://spaceout.pl
+(x/tweeter)[https://x.com/SpaceoutPl]

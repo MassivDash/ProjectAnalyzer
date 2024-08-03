@@ -1,6 +1,6 @@
 {
   "name": "project-analyzer",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "Node cli utility for analyzing project complexity structure ",
   "main": "index.js",
   "types": "./typings/index.d.ts",
@@ -16,6 +16,18 @@
     "testBundle": "npm run build && npm pack && npm i -g project-analyzer-0.7.0.tgz",
     "runAnalyzer": "node ./test/testResultsLab/runAutoTests.js"
   },
+  "keywords": [
+    "npm",
+    "cli",
+    "node",
+    "project",
+    "analyzer",
+    "complexity",
+    "structure",
+    "report",
+    "markdown",
+    "sloc"
+  ],
   "repository": {
     "url": "https://github.com/MassivDash/ProjectAnalyzer"
   },
