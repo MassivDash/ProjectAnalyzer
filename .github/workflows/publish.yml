@@ -36,8 +36,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
         with:
-          tag: v0.7.4.${{github.run_number}}
-          name: v0.7.4.${{github.run_number}}
+          tag: v0.7.5.${{github.run_number}}
+          name: v0.7.5.${{github.run_number}}
           draft: false
           prerelease: false
           generateReleaseNotes: true
