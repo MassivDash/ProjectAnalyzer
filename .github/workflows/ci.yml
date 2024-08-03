@@ -24,7 +24,7 @@ jobs:
       - name: "Install Deps"
         run: npm install
       - name: npm audit report
-        run: npm install -g @netly/npm-audit-markdown && npm audit --json | @netly/npm-audit-markdown --output npm.md
+        run: npm audit --json | npx @netly/npm-audit-markdown --output npm.md
       - name: "Test"
         run: npm run coverage
       - name: Run project analyzer
